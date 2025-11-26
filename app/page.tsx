@@ -1,7 +1,8 @@
 import EventCard from '@/components/EventCard';
 import Link from 'next/link';
+import { Event } from '@/types';
 
-async function getEvents() {
+async function getEvents(): Promise<Event[]> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   const res = await fetch(`${baseUrl}/api/events`, { cache: 'no-store' });
   if (!res.ok) return [];
@@ -37,7 +38,7 @@ export default async function Home() {
             <p className="text-gray-600">No events available at the moment.</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {events.map((event: any) => (
+              {events.map((event) => (
                 <EventCard key={event.id} event={event} />
               ))}
             </div>

@@ -3,10 +3,20 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
+interface ValidationResult {
+  success: boolean;
+  message: string;
+  ticket: {
+    buyerName: string;
+    buyerEmail: string;
+    validatedAt: string;
+  };
+}
+
 export default function VerifyPage() {
   const [ticketId, setTicketId] = useState('');
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<ValidationResult | null>(null);
   const [error, setError] = useState('');
 
   const handleVerify = async (e: React.FormEvent) => {
@@ -31,7 +41,7 @@ export default function VerifyPage() {
       } else {
         setResult(data);
       }
-    } catch (err) {
+    } catch {
       setError('Failed to validate ticket');
     } finally {
       setLoading(false);
